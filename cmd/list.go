@@ -10,7 +10,9 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all todos of a dir recrusively",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("list called")
+    reported, _ := cmd.Flags().GetBool("reported")
+    unreported, _ := cmd.Flags().GetBool("reported")
+    fmt.Println(reported, unreported)
 	},
 }
 

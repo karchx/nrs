@@ -1,5 +1,9 @@
 package project
 
+import (
+	"github.com/karchx/nrs/pkg/todo"
+)
+
 // TransformRule defines a title transformation rule.
 type TransformRule struct {
 	Match   string
@@ -17,4 +21,10 @@ type Project struct {
 	Keywords      []string
 	BodySeparator string
 	Remote        string
+}
+
+// WalkTodosOfDir visits all of the TODOs in a particular directory.
+func (project Project) WalkTodosOfDir(dirpath string, visit func(todo.Todo) error) error {
+  //cmd := exec.Command("git", "ls-files", dirpath)
+  return nil
 }

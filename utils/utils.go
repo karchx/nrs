@@ -8,7 +8,16 @@ import (
 
 	"github.com/karchx/nrs/pkg/errors"
 	"github.com/karchx/nrs/pkg/project"
+	"github.com/karchx/nrs/pkg/todo"
 )
+
+func listSubCommand(project project.Project, filter func(todo todo.Todo) bool) error {
+  todosToList := []*todo.Todo{}
+
+  // err := project.
+
+  return nil
+}
 
 func locateDotGit(directory string) (string, error) {
 	absDir, err := filepath.Abs(directory)
