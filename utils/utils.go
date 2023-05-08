@@ -5,16 +5,33 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"sort"
 
 	"github.com/karchx/nrs/pkg/errors"
 	"github.com/karchx/nrs/pkg/project"
 	"github.com/karchx/nrs/pkg/todo"
 )
 
-func listSubCommand(project project.Project, filter func(todo todo.Todo) bool) error {
+func ListSubCommand(project project.Project, filter func(todo todo.Todo) bool) error {
   todosToList := []*todo.Todo{}
 
-  // err := project.
+  err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
+    if filter(todoP) {
+      todosToList = append(todosToList, &todoP)
+    }
+    return nil
+  })
+  if err != nil {
+    return err
+  }
+
+  sort.Slice(todosToList, func(i, j int) bool {
+    return todosToList[i].Urgency > todosToList[j].Urgency
+  })
+
+  for _, todo := range todosToList {
+    fmt.Println(todo.LogString())
+  }
 
   return nil
 }
