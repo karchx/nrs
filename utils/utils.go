@@ -13,27 +13,27 @@ import (
 )
 
 func ListSubCommand(project project.Project, filter func(todo todo.Todo) bool) error {
-  todosToList := []*todo.Todo{}
+	todosToList := []*todo.Todo{}
 
-  err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
-    if filter(todoP) {
-      todosToList = append(todosToList, &todoP)
-    }
-    return nil
-  })
-  if err != nil {
-    return err
-  }
+	err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
+		if filter(todoP) {
+			todosToList = append(todosToList, &todoP)
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
 
-  sort.Slice(todosToList, func(i, j int) bool {
-    return todosToList[i].Urgency > todosToList[j].Urgency
-  })
+	sort.Slice(todosToList, func(i, j int) bool {
+		return todosToList[i].Urgency > todosToList[j].Urgency
+	})
 
-  for _, todo := range todosToList {
-    fmt.Println(todo.LogString())
-  }
+	for _, todo := range todosToList {
+		fmt.Println(todo.LogString())
+	}
 
-  return nil
+	return nil
 }
 
 func locateDotGit(directory string) (string, error) {

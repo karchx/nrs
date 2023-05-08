@@ -5,6 +5,5 @@ import (
 )
 
 func main() {
-  //project := utils.GetProject(".")
 	cmd.Execute()
 }

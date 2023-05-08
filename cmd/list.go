@@ -11,6 +11,7 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all todos of a dir recrusively",
 	Run: func(cmd *cobra.Command, args []string) {
+    // TODO(#1): use project glabal in commands
 		project := utils.GetProject(".")
 
 		reported, _ := cmd.Flags().GetBool("reported")
