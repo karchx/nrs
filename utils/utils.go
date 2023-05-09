@@ -12,7 +12,7 @@ import (
 	"github.com/karchx/nrs/pkg/todo"
 )
 
-func ListSubCommand(project project.Project, filter func(todo todo.Todo) bool) error {
+func ListSubCommand(project project.Project, filter func(todoP todo.Todo) bool) error {
 	todosToList := []*todo.Todo{}
 
 	err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
@@ -24,6 +24,7 @@ func ListSubCommand(project project.Project, filter func(todo todo.Todo) bool) e
 	if err != nil {
 		return err
 	}
+
 
 	sort.Slice(todosToList, func(i, j int) bool {
 		return todosToList[i].Urgency > todosToList[j].Urgency

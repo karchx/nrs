@@ -87,6 +87,7 @@ func (project Project) LineAsTodo(line string) *todo.Todo {
 
 // WalkTodosOfFile visits all of the TODOs in a particular file.
 func (project Project) WalkTodosOfFile(path string, visit func(todo.Todo) error) error {
+	log.Infof("PATH VISIT OF FILE %s: ", path)
 	file, err := os.Open(path)
 	if err != nil {
 		return err
@@ -99,7 +100,7 @@ func (project Project) WalkTodosOfFile(path string, visit func(todo.Todo) error)
 
 	text, _, err := reader.ReadLine()
 	for line := 1; err == nil; line = line + 1 {
-		if todo == nil {
+		if todo == nil { // LookingForTodo
 			todo = project.LineAsTodo(string(text))
       //log.Infof("TODOs: %v", todo) 
 
@@ -107,7 +108,19 @@ func (project Project) WalkTodosOfFile(path string, visit func(todo.Todo) error)
 				todo.Filename = path
 				todo.Line = line
 			}
-		}
+		} else { // CollectingBody
+      if possibleTodo := project.LineAsTodo(string(text)); possibleTodo != nil {
+        if err := visit(*todo); err != nil {
+          return err
+        }
+
+        todo = possibleTodo
+        todo.Filename = path
+        todo.Line = line
+      }
+    }
+
+    text, _, err = reader.ReadLine()
 	}
 
 	if todo != nil {
