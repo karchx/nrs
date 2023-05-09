@@ -69,10 +69,9 @@ func locateProject(directory string) (string, error) {
 func GetProject(directory string) *project.Project {
 	projectPath, err := locateProject(directory)
 	errors.ExitOnError(err)
-
-	project := &project.Project{
-		BodySeparator: projectPath,
-	}
+  
+  project, err := project.NewProject(projectPath)
+	errors.ExitOnError(err)
 
 	return project
 }
