@@ -3,6 +3,7 @@ package cmd
 import (
 	"github.com/karchx/nrs/pkg/errors"
 	"github.com/karchx/nrs/pkg/todo"
+	"github.com/karchx/nrs/ui"
 	"github.com/karchx/nrs/utils"
 	"github.com/spf13/cobra"
 )
@@ -15,6 +16,7 @@ var listCmd = &cobra.Command{
 		project := utils.GetProject(".")
 
 		reported, _ := cmd.Flags().GetBool("reported")
+		uimode, _ := cmd.Flags().GetBool("ui")
 		unreported, _ := cmd.Flags().GetBool("reported")
 
 		err := utils.ListSubCommand(*project, func(todoP todo.Todo) bool {
@@ -28,6 +30,10 @@ var listCmd = &cobra.Command{
 				filter = filter || todoP.ID != nil
 			}
 
+      if uimode {
+        ui.InitUi()
+      }
+
 			return filter
 		})
 
@@ -39,4 +45,5 @@ func init() {
 	rootCmd.AddCommand(listCmd)
 	listCmd.PersistentFlags().Bool("unreported", false, "Unreported")
 	listCmd.PersistentFlags().Bool("reported", false, "Reported")
+	listCmd.PersistentFlags().Bool("ui", false, "Use UI mode")
 }
