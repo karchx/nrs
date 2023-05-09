@@ -176,9 +176,9 @@ func NewProject(filePath string) (*Project, error) {
 		BodySeparator: defaultBodySeparator,
 	}
 
-  if len(project.Keywords) == 0 {
-    project.Keywords = []string{"TODO"}
-  }
+	if len(project.Keywords) == 0 {
+		project.Keywords = []string{"TODO"}
+	}
 
 	return project, nil
 }

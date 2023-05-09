@@ -25,7 +25,6 @@ func ListSubCommand(project project.Project, filter func(todoP todo.Todo) bool) 
 		return err
 	}
 
-
 	sort.Slice(todosToList, func(i, j int) bool {
 		return todosToList[i].Urgency > todosToList[j].Urgency
 	})
@@ -69,8 +68,8 @@ func locateProject(directory string) (string, error) {
 func GetProject(directory string) *project.Project {
 	projectPath, err := locateProject(directory)
 	errors.ExitOnError(err)
-  
-  project, err := project.NewProject(projectPath)
+
+	project, err := project.NewProject(projectPath)
 	errors.ExitOnError(err)
 
 	return project
