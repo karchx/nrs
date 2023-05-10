@@ -8,33 +8,10 @@ import (
 	"sort"
 
 	"github.com/karchx/nrs/pkg/errors"
+	"github.com/karchx/nrs/pkg/issue"
 	"github.com/karchx/nrs/pkg/project"
 	"github.com/karchx/nrs/pkg/todo"
 )
-
-func ListSubCommand(project project.Project, filter func(todoP todo.Todo) bool) error {
-	todosToList := []*todo.Todo{}
-
-	err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
-		if filter(todoP) {
-			todosToList = append(todosToList, &todoP)
-		}
-		return nil
-	})
-	if err != nil {
-		return err
-	}
-
-	sort.Slice(todosToList, func(i, j int) bool {
-		return todosToList[i].Urgency > todosToList[j].Urgency
-	})
-
-	for _, todo := range todosToList {
-		fmt.Println(todo.LogString())
-	}
-
-	return nil
-}
 
 func locateDotGit(directory string) (string, error) {
 	absDir, err := filepath.Abs(directory)
@@ -65,6 +42,30 @@ func locateProject(directory string) (string, error) {
 	return filepath.Dir(dotGit), nil
 }
 
+func ListSubCommand(project project.Project, filter func(todoP todo.Todo) bool) error {
+	todosToList := []*todo.Todo{}
+
+	err := project.WalkTodosOfDir(".", func(todoP todo.Todo) error {
+		if filter(todoP) {
+			todosToList = append(todosToList, &todoP)
+		}
+		return nil
+	})
+	if err != nil {
+		return err
+	}
+
+	sort.Slice(todosToList, func(i, j int) bool {
+		return todosToList[i].Urgency > todosToList[j].Urgency
+	})
+
+	for _, todo := range todosToList {
+		fmt.Println(todo.LogString())
+	}
+
+	return nil
+}
+
 func GetProject(directory string) *project.Project {
 	projectPath, err := locateProject(directory)
 	errors.ExitOnError(err)
@@ -73,4 +74,8 @@ func GetProject(directory string) *project.Project {
 	errors.ExitOnError(err)
 
 	return project
+}
+
+func GetRepo(directory string, remote string) (string, issue.IssuesAPI, error) {
+  credentials := getCredentials()
 }
