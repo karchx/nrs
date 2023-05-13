@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/charmbracelet/bubbletea v0.24.0
+	github.com/gothew/config v1.0.0
 	github.com/gothew/l-og v1.0.1
 	github.com/spf13/cobra v1.7.0
 )
@@ -27,4 +28,5 @@ require (
 	golang.org/x/sys v0.6.0 // indirect
 	golang.org/x/term v0.6.0 // indirect
 	golang.org/x/text v0.3.8 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

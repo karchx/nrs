@@ -8,7 +8,6 @@ import (
 	"sort"
 
 	"github.com/karchx/nrs/pkg/errors"
-	"github.com/karchx/nrs/pkg/issue"
 	"github.com/karchx/nrs/pkg/project"
 	"github.com/karchx/nrs/pkg/todo"
 )
@@ -76,6 +75,6 @@ func GetProject(directory string) *project.Project {
 	return project
 }
 
-func GetRepo(directory string, remote string) (string, issue.IssuesAPI, error) {
-  credentials := getCredentials()
-}
+//func GetRepo(directory string, remote string) (string, issue.IssuesAPI, error) {
+//  credentials := getCredentials()
+//}

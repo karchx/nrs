@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	log "github.com/gothew/l-og"
+	"github.com/karchx/nrs/pkg/platform"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +12,7 @@ var (
 		Use:   "report",
 		Short: "Report open issues github",
 		Run: func(cmd *cobra.Command, args []string) {
-      log.Info(prependBody)
+			platform.GetCredentials()
 		},
 	}
 )
